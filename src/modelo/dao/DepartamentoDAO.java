@@ -1,5 +1,14 @@
 package modelo.dao;
 
-public interface DepartamentoDAO {
+import java.util.List;
 
+import modelo.entidades.Departamento;
+
+public interface DepartamentoDao {
+
+	void inserir(Departamento objeto);
+	void atualizar(Departamento objeto);
+	void deletarId(Integer id);
+	Departamento pesquisarId(Integer id);
+	List<Departamento> pesquisarTodos();
 }

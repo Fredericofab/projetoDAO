@@ -23,7 +23,6 @@ public class VendedorDaoJDBC implements VendedorDao {
 		this.conexao = conexao;
 	}
 	
-	
 	@Override
 	public void inserir(Vendedor objeto) {
 		PreparedStatement st = null;
@@ -86,8 +85,19 @@ public class VendedorDaoJDBC implements VendedorDao {
 
 	@Override
 	public void deletarId(Integer id) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conexao.prepareStatement("DELETE FROM seller "
+										+ "WHERE Id = ? ");
+			st.setInt(1, id);
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.fecharStatement(st);
+		}
 	}
 
 	@Override

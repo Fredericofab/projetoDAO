@@ -36,10 +36,17 @@ public class Programa {
 
 		System.out.println();
 		System.out.println("=== teste4: Inserindo Vendedor   ===");
-		Vendedor vendedor2 = new Vendedor(null,"Ze","ze@gmail.com",new Date(),4000.00,departamento);
-		vendedorDao.inserir(vendedor2);
-		System.out.println("Inserido o vendedor de ID = " + vendedor2.getId());
+		Vendedor vendedorX = new Vendedor(null,"Ze","ze@gmail.com",new Date(),4000.00,departamento);
+		vendedorDao.inserir(vendedorX);
+		System.out.println("Inserido o vendedor de ID = " + vendedorX.getId());
 		
+		System.out.println();
+		System.out.println("=== teste5: Atualizando o Nome do Vendedor 3   ===");
+		Vendedor vendedorY = vendedorDao.pesquisarId(3);
+		vendedorY.setNome("Novo Nome da Silva");
+		vendedorDao.atualizar(vendedorY);
+		System.out.println("Atualizado o vendedor");
+
 	}
 
 }

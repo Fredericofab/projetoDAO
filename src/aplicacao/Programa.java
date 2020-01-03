@@ -20,7 +20,7 @@ public class Programa {
 		*/		
 		
 		VendedorDao vendedorDao = FabricaDeDao.criarVendedorDao();
-		
+		System.out.println("=== teste1: Vendedor PesquisarId ===");
 		Vendedor vendedor = vendedorDao.pesquisarId(3);
 		System.out.println(vendedor.toString());
 		

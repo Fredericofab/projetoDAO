@@ -50,20 +50,10 @@ public class VendedorDaoJDBC implements VendedorDao {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			
-			// na posição zero não tem dados, sempre necessário o next
-			//para ir para posição um.  Caso exista. 
 			if (rs.next()) {
-				Departamento departamento = new Departamento();
-				departamento.setId(rs.getInt("DepartmentId"));
-				departamento.setNome(rs.getString("DepName"));
-				
-				Vendedor vendedor = new Vendedor();
-				vendedor.setId(rs.getInt("Id"));
-				vendedor.setNome(rs.getString("name"));
-				vendedor.setEmail(rs.getNString("email"));
-				vendedor.setAniversario(rs.getDate("BirthDate"));
-				vendedor.setSalarioBase(rs.getDouble("BaseSalary"));
-				vendedor.setDepartamento(departamento);
+				// essas funcoes auxiliares foram criada apenas para deixar o codigo mais limpo aqui
+				Departamento departamento = instanciaDepartamento(rs);
+				Vendedor vendedor = instanciaVendedor(rs, departamento);
 				return vendedor;
 			}
 			return null;
@@ -76,6 +66,28 @@ public class VendedorDaoJDBC implements VendedorDao {
 			DB.fecharStatement(st);
 		}
 	}
+
+	private Vendedor instanciaVendedor(ResultSet rs, Departamento departamento) throws SQLException {
+		//funcao criada apenas para deixar o codigo que chamou mais "limpo"
+		Vendedor vendedor = new Vendedor();
+		vendedor.setId(rs.getInt("Id"));
+		vendedor.setNome(rs.getString("name"));
+		vendedor.setEmail(rs.getNString("email"));
+		vendedor.setAniversario(rs.getDate("BirthDate"));
+		vendedor.setSalarioBase(rs.getDouble("BaseSalary"));
+		vendedor.setDepartamento(departamento);
+		return vendedor;
+	}
+
+
+	private Departamento instanciaDepartamento(ResultSet rs) throws SQLException {
+		//funcao criada apenas para deixar o codigo que chamou mais "limpo"
+		Departamento departamento = new Departamento();
+		departamento.setId(rs.getInt("DepartmentId"));
+		departamento.setNome(rs.getString("DepName"));
+		return departamento;
+	}
+
 
 	@Override
 	public List<Vendedor> pesquisarTodos() {

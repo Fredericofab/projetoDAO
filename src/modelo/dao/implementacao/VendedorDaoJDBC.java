@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -93,6 +96,43 @@ public class VendedorDaoJDBC implements VendedorDao {
 	public List<Vendedor> pesquisarTodos() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public List<Vendedor> pesquisarPorDepartamento(Departamento departamento) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conexao.prepareStatement("SELECT seller.*,department.Name as DepName "  
+										+ "FROM seller , department " 
+										+ "WHERE seller.DepartmentId = department.Id "  
+										+ "AND DepartmentId = ? "  
+										+ "ORDER BY Name ");
+			st.setInt(1, departamento.getId());
+			rs = st.executeQuery();
+			
+			List<Vendedor> lista = new ArrayList<Vendedor>();
+			Map<Integer, Departamento> map = new HashMap<>();
+			while (rs.next()) {
+				
+				Departamento depto = map.get(rs.getInt("DepartmentId"));
+				if ( depto == null ) {
+					depto = instanciaDepartamento(rs);
+					map.put(rs.getInt("DepartmentId"), depto);
+				}
+				Vendedor vendedor = instanciaVendedor(rs, depto);
+				lista.add(vendedor);
+			}
+			return lista;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.fecharResultSet(rs);
+			DB.fecharStatement(st);
+		}
 	}
 
 }

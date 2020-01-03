@@ -1,6 +1,6 @@
 package aplicacao;
 
-import java.util.Date;
+import java.util.List;
 
 import modelo.dao.FabricaDeDao;
 import modelo.dao.VendedorDao;
@@ -20,9 +20,18 @@ public class Programa {
 		*/		
 		
 		VendedorDao vendedorDao = FabricaDeDao.criarVendedorDao();
+		
 		System.out.println("=== teste1: Vendedor PesquisarId ===");
 		Vendedor vendedor = vendedorDao.pesquisarId(3);
 		System.out.println(vendedor.toString());
+		
+		System.out.println();
+		System.out.println("=== teste2: vendedores do Departamento ===");
+		Departamento departamento = new Departamento(2, null);
+		List<Vendedor> lista = vendedorDao.pesquisarPorDepartamento(departamento);
+		for (Vendedor x : lista){
+			System.out.println(x);
+		}
 		
 	}
 

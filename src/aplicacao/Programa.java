@@ -11,14 +11,6 @@ public class Programa {
 
 	public static void main(String[] args) {
 
-		/*
-		Departamento depto = new Departamento(1, "livros");
-		System.out.println(depto);
-
-		Vendedor vendedor = new Vendedor(21, "fred", "fred@gmail.com", new Date(), 3000.01, depto);
-		System.out.println(vendedor);
-		*/		
-		
 		VendedorDao vendedorDao = FabricaDeDao.criarVendedorDao();
 		
 		System.out.println("=== teste1: Vendedor PesquisarId ===");
@@ -32,6 +24,14 @@ public class Programa {
 		for (Vendedor x : lista){
 			System.out.println(x);
 		}
+	
+		System.out.println();
+		System.out.println("=== teste3: Todos os Vendedores   ===");
+		List<Vendedor> lista3 = vendedorDao.pesquisarTodos();
+		for (Vendedor x : lista3){
+			System.out.println(x);
+		}
+
 		
 	}
 

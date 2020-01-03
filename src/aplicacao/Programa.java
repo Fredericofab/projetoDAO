@@ -52,7 +52,6 @@ public class Programa {
 		idInfo = sc.nextInt();
 		System.out.print("Informe o Novo email do vendedor");
 		String emailInfo = sc.next();
-		
 		Vendedor vendedorY = vendedorDao.pesquisarId(idInfo);
 		vendedorY.setEmail(emailInfo);
 		vendedorDao.atualizar(vendedorY);
